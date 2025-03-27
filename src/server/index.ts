@@ -7,7 +7,10 @@ const app = express();
 app.use(session({ secret: "secret" }));
 app.use(auth);
 app.use(api);
-app.get("/api/hi", (req: Request, res: Response) => {
-  res.send("ola");
-});
+app.get(
+  "https://vuejs-todolist.onrender.com/api/hi",
+  (req: Request, res: Response) => {
+    res.send("ola");
+  }
+);
 app.listen(3002, () => console.log("started"));

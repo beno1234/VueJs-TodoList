@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "start": "tsx src/server",
     "dev": "vite",
     "dev-node": "tsx watch src/server",
     "build": "run-p type-check \"build-only {@}\" --",

@@ -17,7 +17,7 @@ const validUsers: UserInfo[] = [
 export const auth = Router();
 auth.use(json());
 
-auth.post("/api/signIn", (req, res) => {
+auth.post("https://vuejs-todolist.onrender.com/api/signIn", (req, res) => {
   const user = validUsers.find((user) => user.name === req.body.username);
   if (user) {
     req.session!["user"] = user;
@@ -27,10 +27,13 @@ auth.post("/api/signIn", (req, res) => {
   }
 });
 
-auth.get("/api/currentUser", (req: Request, res: Response) => {
-  res.json(req.session?.user || null);
-});
-auth.post("api/signout", (req, res) => {
+auth.get(
+  "https://vuejs-todolist.onrender.com/api/currentUser",
+  (req: Request, res: Response) => {
+    res.json(req.session?.user || null);
+  }
+);
+auth.post("https://vuejs-todolist.onrender.com/api/signout", (req, res) => {
   req.session!["user"] = null;
   res.json("Deslogado");
 });
