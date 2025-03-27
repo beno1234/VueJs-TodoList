@@ -3,7 +3,7 @@ import { onMounted, onUnmounted, ref } from "vue";
 import { Task } from "./shared/task";
 import { remult } from "remult";
 import { TaskController } from "./shared/TasksController";
-
+remult.apiClient.url = "https://vuejs-todolist.onrender.com";
 const tasks = ref<Task[]>([]);
 const taskRepo = remult.repo(Task);
 
