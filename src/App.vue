@@ -33,18 +33,30 @@ async function addTask() {
   }
 
   try {
-    const newTask = await taskRepo.insert({
-      title: newTaskTitle.value,
-      description: newTaskDescription.value,
-    });
+    const response = await fetch(
+      "https://vuejs-todolist.onrender.com/api/tasks",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: newTaskTitle.value,
+          description: newTaskDescription.value,
+        }),
+      }
+    );
 
-    newTaskTitle.value = "";
-    newTaskDescription.value = "";
-    await fetchTasks();
+    if (response.ok) {
+      await fetchTasks(); // Refazer a busca após adicionar
+    } else {
+      throw new Error("Erro ao adicionar tarefa");
+    }
   } catch (error: any) {
     alert(error.message);
   }
 }
+
 async function deleteTask(task: Task) {
   try {
     await taskRepo.delete(task);
