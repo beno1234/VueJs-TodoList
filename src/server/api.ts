@@ -8,7 +8,6 @@ dotenv.config();
 export const api = remultExpress({
   entities: [Task],
   controllers: [TaskController],
-  getUser: (req) => req.session!["user"],
   dataProvider: createPostgresConnection({
     connectionString: process.env.POSTGRE,
   }),
