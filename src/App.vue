@@ -12,7 +12,7 @@ async function fetchTasks() {
       .then((res) => res.json())
       .then(console.log)
       .catch(console.error);
-    tasks.value = await taskRepo.find(); // Traz todas as tasks do banco
+    tasks.value = await taskRepo.find();
     console.log("Tarefas carregadas:", tasks.value);
   } catch (error) {
     console.error("Erro ao buscar tarefas:", error);

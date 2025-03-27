@@ -5,7 +5,13 @@ import session from "cookie-session";
 import { auth } from "./auth";
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:8080", "https://vuejs-todolist.onrender.com"], // Adicione a URL do seu frontend no Render
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 app.use(session({ secret: "secret" }));
 app.use(auth);
 app.use(api);
