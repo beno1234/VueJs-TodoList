@@ -61,7 +61,7 @@ async function setAllCompleted(completed: boolean) {
 <template>
   <h1>To Do List - Mplan</h1>
   <main>
-    <form @submit.prevent="addTask">
+    <form @submit.prevent="addTask" v-if="taskRepo.metadata.apiInsertAllowed()">
       <label for="taskTitle">
         O que precisa ser feito?
         <input
