@@ -80,16 +80,54 @@ async function deleteTask(task: Task) {
 }
 async function saveTask(task: Task) {
   try {
-    await taskRepo.save(task);
-    await fetchTasks();
+    const response = await fetch(
+      `https://vuejs-todolist.onrender.com/api/tasks/${task.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: task.title,
+          description: task.description,
+          completed: task.completed,
+        }),
+      }
+    );
+
+    if (response.ok) {
+      await fetchTasks(); // Refazer a busca após salvar
+    } else {
+      throw new Error("Erro ao salvar tarefa");
+    }
   } catch (error: any) {
     alert(error.message);
   }
 }
 
 async function setAllCompleted(completed: boolean) {
-  await TaskController.setAllCompleted(completed);
-  await fetchTasks();
+  try {
+    const response = await fetch(
+      "https://vuejs-todolist.onrender.com/api/tasks/setAllCompleted",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          completed: completed,
+        }),
+      }
+    );
+
+    if (response.ok) {
+      await fetchTasks();
+    } else {
+      throw new Error("Erro ao marcar todas as tarefas");
+    }
+  } catch (error: any) {
+    alert(error.message);
+  }
 }
 </script>
 
