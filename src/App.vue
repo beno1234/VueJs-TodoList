@@ -107,24 +107,25 @@ async function saveTask(task: Task) {
 
 async function setAllCompleted(completed: boolean) {
   try {
-    const response = await fetch(
-      "https://vuejs-todolist.onrender.com/api/tasks/setAllCompleted",
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          completed: completed,
-        }),
+    // Atualiza todas as tarefas uma por uma
+    for (const task of tasks.value) {
+      const response = await fetch(
+        `https://vuejs-todolist.onrender.com/api/tasks/${task.id}`,
+        {
+          method: "PUT", // Atualiza uma por uma
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            completed: completed,
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Erro ao atualizar tarefa");
       }
-    );
-
-    if (response.ok) {
-      await fetchTasks();
-    } else {
-      throw new Error("Erro ao marcar todas as tarefas");
     }
+    await fetchTasks(); // Refazer a busca após atualizar todas as tarefas
   } catch (error: any) {
     alert(error.message);
   }
