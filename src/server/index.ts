@@ -5,13 +5,7 @@ import session from "cookie-session";
 import { auth } from "./auth";
 
 const app = express();
-app.use(
-  cors({
-    origin: ["https://vue-js-todo-list-three.vercel.app/"], // Adicione a URL do seu frontend no Render
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type"],
-  })
-);
+app.use(cors());
 app.use(session({ secret: "secret" }));
 app.use(auth);
 app.use(api);
