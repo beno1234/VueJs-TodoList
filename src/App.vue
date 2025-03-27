@@ -61,7 +61,7 @@ async function setAllCompleted(completed: boolean) {
 <template>
   <h1>To Do List - Mplan</h1>
   <main>
-    <form @submit.prevent="addTask" v-if="taskRepo.metadata.apiInsertAllowed()">
+    <form @submit.prevent="addTask">
       <label for="taskTitle">
         O que precisa ser feito?
         <input
@@ -95,12 +95,7 @@ async function setAllCompleted(completed: boolean) {
         <button @click="($event) => saveTask(task)">Salvar</button>
       </div>
       <p class="task-description">{{ task.description }}</p>
-      <button
-        v-if="taskRepo.metadata.apiDeleteAllowed()"
-        @click="($event) => deleteTask(task)"
-      >
-        Deletar
-      </button>
+      <button @click="($event) => deleteTask(task)">Deletar</button>
     </div>
 
     <div class="button-group" style="display: flex">
