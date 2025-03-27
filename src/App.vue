@@ -48,7 +48,7 @@ async function addTask() {
     );
 
     if (response.ok) {
-      await fetchTasks(); // Refazer a busca após adicionar
+      await fetchTasks();
     } else {
       throw new Error("Erro ao adicionar tarefa");
     }
@@ -59,8 +59,21 @@ async function addTask() {
 
 async function deleteTask(task: Task) {
   try {
-    await taskRepo.delete(task);
-    await fetchTasks();
+    const response = await fetch(
+      `https://vuejs-todolist.onrender.com/api/tasks/${task.id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (response.ok) {
+      await fetchTasks();
+    } else {
+      throw new Error("Erro ao deletar tarefa");
+    }
   } catch (error: any) {
     alert(error.message);
   }
