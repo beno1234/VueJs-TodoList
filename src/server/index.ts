@@ -7,7 +7,7 @@ import { auth } from "./auth";
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:8080", "https://vuejs-todolist.onrender.com"], // Adicione a URL do seu frontend no Render
+    origin: ["https://vuejs-todolist.onrender.com"], // Adicione a URL do seu frontend no Render
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
   })
