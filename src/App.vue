@@ -8,11 +8,11 @@ const taskRepo = remult.repo(Task);
 
 async function fetchTasks() {
   try {
-    fetch("https://vuejs-todolist.onrender.com/api/tasks")
-      .then((res) => res.json())
-      .then(console.log)
-      .catch(console.error);
-    tasks.value = await taskRepo.find();
+    const response = await fetch(
+      "https://vuejs-todolist.onrender.com/api/tasks"
+    );
+    const data = await response.json();
+    tasks.value = data;
     console.log("Tarefas carregadas:", tasks.value);
   } catch (error) {
     console.error("Erro ao buscar tarefas:", error);
