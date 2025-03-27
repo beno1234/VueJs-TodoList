@@ -6,6 +6,7 @@ const validUsers: UserInfo[] = [
   {
     id: "1",
     name: "Jane",
+    roles: ["admin"],
   },
   {
     id: "2",
