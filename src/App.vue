@@ -3,18 +3,24 @@ import { onMounted, onUnmounted, ref } from "vue";
 import { Task } from "./shared/task";
 import { remult } from "remult";
 import { TaskController } from "./shared/TasksController";
-remult.apiClient.url = "https://vuejs-todolist.onrender.com/api/";
 const tasks = ref<Task[]>([]);
 const taskRepo = remult.repo(Task);
 
+async function fetchTasks() {
+  try {
+    fetch("https://vuejs-todolist.onrender.com/api/tasks")
+      .then((res) => res.json())
+      .then(console.log)
+      .catch(console.error);
+    tasks.value = await taskRepo.find(); // Traz todas as tasks do banco
+    console.log("Tarefas carregadas:", tasks.value);
+  } catch (error) {
+    console.error("Erro ao buscar tarefas:", error);
+  }
+}
+
 onMounted(() => {
-  onUnmounted(
-    taskRepo
-      .liveQuery({
-        where: { completed: undefined },
-      })
-      .subscribe((info) => (tasks.value = info.applyChanges(tasks.value)))
-  );
+  fetchTasks();
 });
 
 const newTaskTitle = ref("");
@@ -34,6 +40,7 @@ async function addTask() {
 
     newTaskTitle.value = "";
     newTaskDescription.value = "";
+    await fetchTasks();
   } catch (error: any) {
     alert(error.message);
   }
@@ -41,6 +48,7 @@ async function addTask() {
 async function deleteTask(task: Task) {
   try {
     await taskRepo.delete(task);
+    await fetchTasks();
   } catch (error: any) {
     alert(error.message);
   }
@@ -48,6 +56,7 @@ async function deleteTask(task: Task) {
 async function saveTask(task: Task) {
   try {
     await taskRepo.save(task);
+    await fetchTasks();
   } catch (error: any) {
     alert(error.message);
   }
@@ -55,6 +64,7 @@ async function saveTask(task: Task) {
 
 async function setAllCompleted(completed: boolean) {
   await TaskController.setAllCompleted(completed);
+  await fetchTasks();
 }
 </script>
 
