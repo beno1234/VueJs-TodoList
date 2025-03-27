@@ -83,7 +83,7 @@ async function saveTask(task: Task) {
     const response = await fetch(
       `https://vuejs-todolist.onrender.com/api/tasks/${task.id}`,
       {
-        method: "PATCH",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -96,7 +96,7 @@ async function saveTask(task: Task) {
     );
 
     if (response.ok) {
-      await fetchTasks(); // Refazer a busca após salvar
+      await fetchTasks();
     } else {
       throw new Error("Erro ao salvar tarefa");
     }
@@ -110,7 +110,7 @@ async function setAllCompleted(completed: boolean) {
     const response = await fetch(
       "https://vuejs-todolist.onrender.com/api/tasks/setAllCompleted",
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
