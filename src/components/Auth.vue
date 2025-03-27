@@ -7,7 +7,7 @@ const username = ref("");
 const signedIn = ref(false);
 
 async function SignIn() {
-  const result = await fetch("/api/signIn", {
+  const result = await fetch("https://vuejs-todolist.onrender.com/api/signIn", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -23,13 +23,15 @@ async function SignIn() {
 }
 
 onMounted(async () => {
-  const result = await fetch("/api/currentUser");
+  const result = await fetch(
+    "https://vuejs-todolist.onrender.com/api/currentUser"
+  );
   remult.user = await result.json();
   signedIn.value = remult.authenticated();
 });
 
 async function signOut() {
-  await fetch("/api/signout", {
+  await fetch("https://vuejs-todolist.onrender.com/api/signout", {
     method: "POST",
   });
   remult.user = undefined;
